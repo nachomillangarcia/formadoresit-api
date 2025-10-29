@@ -27,6 +27,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      # - name: Build and push Docker image (push)
+      #   if: github.event_name == 'push'
+      #   run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      # - name: Build and push Docker image (push)
+      #   if: github.event_name == 'workflow_dispatch'
+      #   run: echo "IMAGE_TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_ENV
 
       # Build and push Docker image with cache
       - name: Build and push Docker image (push)
@@ -42,16 +50,17 @@ jobs:
           cache-from: type=gha,scope=${{ github.workflow }}
           cache-to: type=gha,mode=max,scope=${{ github.workflow }}
 
-
-      - name: Build and push Docker image (dispatch)
-        if: github.event_name == 'workflow_dispatch'
-        uses: docker/build-push-action@v6
+      - name: Trigger workflow in other repo
+        uses: actions/github-script@v8
         with:
-          context: .
-          file: ./Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/ayesa-java-api:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/ayesa-java-api:${{ github.event.inputs.tag_name }}
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'nachomillangarcia',
+              repo: 'formadoresit-ayesa',
+              workflow_id: 'deploy-java-api.yaml',
+              ref: 'main',
+              inputs: {
+                tag_name: '${{ github.sha }}'
+              }
+            });
+          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
