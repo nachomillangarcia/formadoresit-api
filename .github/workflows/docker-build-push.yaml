@@ -28,11 +28,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push Docker image (push)
+      - name: Set IMAGE_TAG for push events
         if: github.event_name == 'push'
         run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
-      - name: Build and push Docker image (push)
+      - name: Set IMAGE_TAG for dispatch events
         if: github.event_name == 'workflow_dispatch'
         run: echo "IMAGE_TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_ENV
 
