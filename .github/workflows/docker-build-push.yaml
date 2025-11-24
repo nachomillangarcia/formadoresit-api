@@ -38,12 +38,11 @@ jobs:
 
       # Build and push Docker image with cache
       - name: Build and push Docker image (push)
-        if: github.event_name == 'push'
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/ayesa-java-api:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/ayesa-java-api:${{ env.IMAGE_TAG }}
