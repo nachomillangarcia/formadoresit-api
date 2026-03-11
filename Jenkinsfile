@@ -22,10 +22,10 @@ pipeline {
             tty: true
 
           - name: jnlp
-            image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven:latest
+            image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-base:latest
             args: ['\${computer.jnlpmac}', '\${computer.name}']
             workDir: /tmp
-            tty: true
+
         '''
       retries 2
     }
