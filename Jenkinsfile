@@ -55,7 +55,7 @@ pipeline {
     stage('Trigger docker build') {
       steps {
         container("jnlp") {
-            sh "oc start-build -F openshift-jee-sample-docker --from-dir=`pwd`"
+            sh "oc start-build -F java-api --from-dir=`pwd`"
           }
       }
     }
