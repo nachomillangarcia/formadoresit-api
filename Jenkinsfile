@@ -48,6 +48,7 @@ pipeline {
       steps {
         container('maven') {
             sh "mvn test -Dmaven.repo.local=$WORKSPACE/.m2/repository"
+            sh "rm -r $WORKSPACE/.m2/repository"
         }
   
       }
@@ -55,6 +56,7 @@ pipeline {
     stage('Trigger docker build') {
       steps {
         container("jnlp") {
+            sh "ls -al"
             sh "oc start-build -F java-api --from-dir=`pwd`"
           }
       }
