@@ -27,7 +27,10 @@ pipeline {
     stage('Run maven') {
       steps {
         container('maven') {
-          sh 'mvn -version'
+            sh "mvn --version"
+            sh "java -version"
+            sh "env"
+            sh "ls"
         }
         container('busybox') {
           sh 'env'
