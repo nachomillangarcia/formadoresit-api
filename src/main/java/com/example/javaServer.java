@@ -47,7 +47,7 @@ public class javaServer {
                     req.ip());
         });
 
-        get("/", (req, res) -> "Hello from Java inside Docker! 2");
+        get("/", (req, res) -> "Hello from Java inside Docker! Automatically updated!");
         get("/health", (req, res) -> "OK");
         get("/home", (req, res) -> {
             try {
