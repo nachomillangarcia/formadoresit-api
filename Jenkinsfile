@@ -8,6 +8,7 @@ pipeline {
           labels:
             some-label: some-label-value
         spec:
+          serviceAccount: jenkins
           containers:
           - name: maven
             image: maven:3.9.9-eclipse-temurin-17
@@ -37,7 +38,6 @@ pipeline {
             sh "java -version"
             sh "env"
             sh "ls"
-            sh "mvn test -Dmaven.repo.local=$WORKSPACE/.m2/repository"
         }
         container('busybox') {
           sh 'env'
