@@ -55,24 +55,7 @@ pipeline {
     stage('Trigger docker build') {
       steps {
         container("jnlp") {
-            script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            // Trigger the build from the local directory 
-                            // (or let OpenShift pull from Git)
-                            def buildObj = openshift.selector("bc", "my-app-name").startBuild()
-                            
-                            // Stream logs to Jenkins console and wait for completion
-                            buildObj.logs('-f')
-                            
-                            // Ensure the build succeeded
-                            timeout(5) { 
-                                buildObj.untilEach(1) {
-                                    return it.object().status.phase == "Complete"
-                                }
-                            }
-                        }
-                    }
+            sh "oc start-build -F openshift-jee-sample-docker --from-dir=`pwd`"
           }
       }
     }
