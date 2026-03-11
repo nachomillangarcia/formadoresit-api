@@ -31,6 +31,7 @@ pipeline {
             sh "java -version"
             sh "env"
             sh "ls"
+            sh "mvn test"
         }
         container('busybox') {
           sh 'env'
