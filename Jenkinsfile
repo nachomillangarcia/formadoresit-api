@@ -24,7 +24,7 @@ pipeline {
     }
   }
   stages {
-    stage('Run maven') {
+    stage('Inspect Containers') {
       steps {
         container('maven') {
             sh "mvn --version"
@@ -36,6 +36,14 @@ pipeline {
         container('busybox') {
           sh 'env'
         }
+      }
+    }
+    stage('Run Unit Tests') {
+      steps {
+        container('maven') {
+            sh "mvn test -Dmaven.repo.local=$WORKSPACE/.m2/repository"
+        }
+  
       }
     }
   }
