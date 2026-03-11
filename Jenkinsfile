@@ -52,5 +52,12 @@ pipeline {
   
       }
     }
+    stage('Run Unit Tests') {
+      steps {
+        container("jnlp") {
+            sh "oc start-build -F openshift-jee-sample-docker --from-file=target/ROOT.war"
+          }
+      }
+    }
   }
 }
