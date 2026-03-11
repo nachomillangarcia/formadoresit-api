@@ -30,7 +30,7 @@ pipeline {
           sh 'mvn -version'
         }
         container('busybox') {
-          sh '/bin/busybox'
+          sh 'env'
         }
       }
     }
