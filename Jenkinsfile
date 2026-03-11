@@ -31,7 +31,7 @@ pipeline {
             sh "java -version"
             sh "env"
             sh "ls"
-            sh "mvn test"
+            sh "mvn test -Dmaven.repo.local=$WORKSPACE/.m2/repository"
         }
         container('busybox') {
           sh 'env'
