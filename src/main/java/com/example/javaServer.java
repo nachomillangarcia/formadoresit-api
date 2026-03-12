@@ -47,7 +47,7 @@ public class javaServer {
                     req.ip());
         });
 
-        get("/", (req, res) -> "Hello from Java inside Docker! Tekton 21");
+        get("/", (req, res) -> "Hello from Java inside Docker! Tekton 121");
         get("/health", (req, res) -> "OK");
         get("/home", (req, res) -> {
             try {
