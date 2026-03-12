@@ -1,6 +1,6 @@
 # Dockerfile
 # ===== Stage 1: Build the application =====
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+FROM docker.io/maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy Maven descriptor and download dependencies first (for better caching)
@@ -14,7 +14,7 @@ COPY src ./src
 RUN mvn package
 
 # ===== Stage 2: Run the application =====
-FROM eclipse-temurin:17-jre
+FROM docker.io/eclipse-temurin:17-jre
 WORKDIR /app
 
 # Copy the built jar from the previous stage
